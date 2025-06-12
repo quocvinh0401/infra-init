@@ -12,7 +12,7 @@ module "ec2" {
 
   name          = var.name
   ami           = "ami-01938df366ac2d954"
-  instance_type = "t3.xlarge"
+  instance_type = "t2.micro"
   vpc_id        = module.vpc.vpc_id
   subnet_id     = module.vpc.public_subnets[0]
 }
