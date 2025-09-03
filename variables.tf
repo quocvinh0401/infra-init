@@ -6,5 +6,5 @@ variable "region" {
 
 variable "name" {
   type    = string
-  default = "demo"
+  default = "test-mapstore"
 }

@@ -11,8 +11,8 @@ module "ec2" {
   source = "./modules/ec2"
 
   name          = var.name
-  ami           = "ami-01938df366ac2d954"
-  instance_type = "t2.micro"
+  ami           = "ami-0933f1385008d33c4"
+  instance_type = "t3.large"
   vpc_id        = module.vpc.vpc_id
   subnet_id     = module.vpc.public_subnets[0]
 }

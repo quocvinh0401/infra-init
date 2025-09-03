@@ -43,13 +43,28 @@ resource "aws_instance" "ec2" {
   vpc_security_group_ids = [aws_security_group.sg.id]
   subnet_id              = var.subnet_id
   associate_public_ip_address = true
+  key_name               = aws_key_pair.key_pair.key_name
 
   tags = {
     Name = var.name
   }
 }
 
+resource "tls_private_key" "key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
 
+resource "aws_key_pair" "key_pair" {
+  key_name   = "${var.name}-key"
+  public_key = tls_private_key.key.public_key_openssh
+}
+
+resource "local_file" "private_key" {
+  content         = tls_private_key.key.private_key_pem
+  filename        = "${path.root}/ansible/${var.name}-key.pem"
+  file_permission = "0400"
+}
 
 # resource "null_resource" "run_ansible" {
 #   depends_on = [aws_instance.ec2, local_file.ansible_inventory]
